@@ -1,8 +1,8 @@
 
-function Day({jour, className=""}){
+function Day({jour, className="", onClick}){
 
     return(
-        <div className={className}>
+        <div className={className} onClick={onClick}>
             {jour}
         </div>
     )
