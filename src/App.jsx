@@ -1,5 +1,6 @@
 import './App.css';
 import Day from "./components/Day";
+import FormCalendar from './components/FormCalendar';
 
 const MONTH = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
 const DAY = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedie','Dimanche'];
@@ -23,6 +24,13 @@ function App(){
 		});
 		
 		event.currentTarget.classList.add("selected");
+
+	}
+	function handleSubmit(event){
+		event.preventDefault();
+		console.log("Nom :",event.target.eventName.value);
+		console.log("Date :",event.target.eventDate.value);
+		console.log("Lieu :",event.target.eventLocation.value);
 
 	}
 	
@@ -52,6 +60,7 @@ function App(){
 					})}
 				</section>
 			</article>
+			<FormCalendar onSubmit={handleSubmit}/>
 		</>
 	);
 
