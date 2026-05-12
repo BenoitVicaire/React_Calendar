@@ -3,9 +3,9 @@ function FormCalendar({onSubmit}){
 
     return(
         <form 
-            onSubmit={onSubmit}
+            action={onSubmit}
         >
-            <h2>Title</h2>
+            <h2>Créer un evenement</h2>
             <input 
                 type="text" 
                 name="eventName" 
@@ -14,15 +14,15 @@ function FormCalendar({onSubmit}){
             />
             <input 
                 type="datetime" 
-                name="eventDate" 
-                id="eventDate" 
-                placeholder="Date de l'event"
+                name="eventHour" 
+                id="eventHour" 
+                placeholder="Heure de l'event"
             />
             <input 
-            type="text" 
-            name="eventLocation" 
-            id="eventLocation" 
-            placeholder="Lieu"
+                type="text" 
+                name="eventLocation" 
+                id="eventLocation" 
+                placeholder="Lieu"
             />
             <input type="submit" value="Créer" />
         </form>

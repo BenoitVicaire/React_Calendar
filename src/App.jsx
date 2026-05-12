@@ -1,39 +1,53 @@
 import './App.css';
 import Day from "./components/Day";
 import FormCalendar from './components/FormCalendar';
-
-const MONTH = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Décembre'];
-const DAY = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedie','Dimanche'];
+import { useState } from 'react';
+import {DAY, MONTH, EVENT_LIST} from './assets/dataSet';
 
 function App(){
-
-	
 	const DAY_LETTER=[];
+	const ROW = [];
+	const [selected, setSelected] = useState(null);
+	const [eventList,setEventList] = useState(EVENT_LIST);
+
 	DAY.map((element => {
 		DAY_LETTER.push(element.charAt(0));
 	}))
 
-	const ROW = [];
 	for(let i=1;i<=31;i++){
 		ROW.push(i)
 	}
 
-	function handleClick(event){
-		document.querySelectorAll(".selected").forEach(e=>{
-			e.classList.remove("selected");
-		});
+	function handleClick(index){
+		setSelected(index);
+	}
+
+	async function handleSubmit(formData){
+		const eventName= formData.get("eventName");
+		const eventHour= formData.get("eventHour");
+		const eventLocation= formData.get("eventLocation");
+
+		console.log("Nom :",eventName);
+		console.log("Heure :",eventHour);
+		console.log("Lieu :",eventLocation);
+
+		if(eventName =="" || eventHour =="" || eventLocation==""){
+			alert("Write something in those input nub")
+		}
+		else if(selected==null){
+			alert("Selectionne une date");
+		}else{
+		const NEW_EVENEMENT = {
+			nom:eventName,
+			heure:eventHour,
+			lieu:eventLocation,
+			index:selected,
+			confirmed:true
+		}
+		console.log(NEW_EVENEMENT);
 		
-		event.currentTarget.classList.add("selected");
-
+		}
 	}
-	function handleSubmit(event){
-		event.preventDefault();
-		console.log("Nom :",event.target.eventName.value);
-		console.log("Date :",event.target.eventDate.value);
-		console.log("Lieu :",event.target.eventLocation.value);
-
-	}
-	
 	return (
 		<>
 			<h1 onClick={handleClick}>Le calendrier de l'apres</h1>
@@ -47,14 +61,18 @@ function App(){
 					})}
 				</section>
 				{/* Jours */}
-				<section className="grid-7-days">
+				<section className="grid-7 days">
 					{ROW.map((e , index)=>{
 						return(
 							<Day 
 								key={index}
 								jour={e} 
-								className='day backgroundOrange' 
-								onClick={handleClick}
+								className={
+									selected === index
+									? 'day backgroundOrange selected'
+									: 'day backgroundOrange'
+								} 
+								onClick={()=>handleClick(index)}
 							/>
 						)
 					})}
